@@ -198,7 +198,7 @@ export const Compressor: React.FC = () => {
                 className="px-4 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs flex items-center gap-1.5 transition-all"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                Comprimir SOXCIMA
+                Comprimir Socxima-comprimir
               </button>
             </div>
           </div>

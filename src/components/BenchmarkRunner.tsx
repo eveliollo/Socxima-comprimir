@@ -33,7 +33,7 @@ export const BenchmarkRunner: React.FC = () => {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <Cpu className="w-5 h-5 text-emerald-400" />
-              <h2 className="text-lg font-bold text-white">SOXCIMA Performance Benchmark Suite</h2>
+              <h2 className="text-lg font-bold text-white">Socxima-comprimir Performance Benchmark Suite</h2>
               <span className="px-2 py-0.5 text-xs font-semibold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 Official Spec Test
               </span>

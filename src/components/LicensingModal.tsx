@@ -21,7 +21,7 @@ export const LicensingModal: React.FC<LicensingModalProps> = ({ isOpen, onClose 
               <Scale className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-lg font-bold">Términos de Licencia SOXCIMA</h3>
+              <h3 className="text-lg font-bold">Términos de Licencia Socxima-comprimir</h3>
               <p className="text-xs text-slate-400">Especificación Oficial v5.1 por {SOXCIMA_AUTHOR}</p>
             </div>
           </div>
@@ -39,12 +39,16 @@ export const LicensingModal: React.FC<LicensingModalProps> = ({ isOpen, onClose 
           {/* Header Spec Block */}
           <div className="bg-slate-900 text-emerald-300 p-4 rounded-xl font-mono text-xs border border-slate-800 space-y-1">
             <p className="text-slate-400"># =====================================================</p>
-            <p className="font-bold text-emerald-400">#   SOXCIMA — SISTEMA DE COMPRESIÓN UNIVERSAL</p>
+            <p className="font-bold text-emerald-400">#   SOXCIMA-COMPRIMIR — SISTEMA DE COMPRESIÓN UNIVERSAL</p>
             <p>#   CREADOR: {SOXCIMA_AUTHOR}</p>
             <p>#   FECHA: {SOXCIMA_DATE}</p>
-            <p>#   FIRMA: {SOXCIMA_SIGNATURE}</p>
-            <p>#   REGLAS: USO GRATIS PARA PERSONAS. USO COMERCIAL</p>
-            <p>#   REQUIERE LICENCIA A EVELIO LLOVERA. NO BORRAR ESTA CABECERA.</p>
+            <p>#   FIRMA ÚNICA: {SOXCIMA_SIGNATURE}</p>
+            <p className="text-slate-400"># =====================================================</p>
+            <p className="text-slate-300">#   CONDICIONES DE USO — NO BORRAR NI MODIFICAR:</p>
+            <p>#   ✅ GRATIS: Para personas, uso personal y educativo</p>
+            <p>#   💰 COMERCIAL: Cualquier empresa o negocio que gane</p>
+            <p>#      dinero con este sistema debe pagar licencia al creador</p>
+            <p>#   ✅ Esta cabecera NUNCA se borra, ni se cambia, ni se mueve</p>
             <p className="text-slate-400"># =====================================================</p>
           </div>
 

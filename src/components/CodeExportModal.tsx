@@ -29,7 +29,7 @@ export const CodeExportModal: React.FC<CodeExportModalProps> = ({ isOpen, onClos
         <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
           <div className="flex items-center gap-2">
             <FileCode2 className="w-5 h-5 text-emerald-400" />
-            <h3 className="text-base font-bold text-white">Código de Implementación SOXCIMA v5.1</h3>
+            <h3 className="text-base font-bold text-white">Código de Implementación Socxima-comprimir v5.1</h3>
           </div>
           <button
             onClick={onClose}

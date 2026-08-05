@@ -41,7 +41,7 @@ export default function App() {
           
           <div className="flex items-center gap-2">
             <Zap className="w-4 h-4 text-emerald-400" />
-            <span>SOXCIMA {SOXCIMA_VERSION} — Sistema de Compresión Universal</span>
+            <span>Socxima-comprimir {SOXCIMA_VERSION} — Sistema de Compresión Universal</span>
           </div>
 
           <div className="flex items-center gap-3">

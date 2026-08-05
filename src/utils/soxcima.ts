@@ -253,12 +253,22 @@ export const SAMPLE_DATASETS = [
  * Code snippets generator in various languages for developers wanting to integrate SOXCIMA.
  */
 export const CODE_SNIPPETS = {
-  python: `# SOXCIMA v5.1 — CREADOR: EVELIO LLOVERA
-# FIRMA: SOXCIMA-7G-LLAVE-ORIGINAL
+  python: `# =====================================================
+#   SOXCIMA-COMPRIMIR — SISTEMA DE COMPRESIÓN UNIVERSAL
+#   CREADOR: EVELIO LLOVERA
+#   FECHA: 4 DE AGOSTO DE 2026
+#   FIRMA ÚNICA: SOXCIMA-7G-LLAVE-ORIGINAL
+# =====================================================
+#   CONDICIONES DE USO — NO BORRAR NI MODIFICAR:
+#   ✅ GRATIS: Para personas, uso personal y educativo
+#   💰 COMERCIAL: Cualquier empresa o negocio que gane
+#      dinero con este sistema debe pagar licencia al creador
+#   ✅ Esta cabecera NUNCA se borra, ni se cambia, ni se mueve
+# =====================================================
 
 def comprimir_soxcima(texto):
     dicc = {}
-    prox = 1
+    proximo = 1
     salida = []
     lineas = texto.split("\\n")
     for linea in lineas:
@@ -266,11 +276,11 @@ def comprimir_soxcima(texto):
             salida.append("")
             continue
         if linea not in dicc:
-            dicc[linea] = "@" + str(prox)
-            prox += 1
+            dicc[linea] = "@" + str(proximo)
+            proximo += 1
         salida.append(dicc[linea])
-    cab = " ".join(v + "=" + k for k, v in dicc.items()) + " | "
-    return cab + "\\n".join(salida)
+    cabecera = " ".join(v + "=" + k for k, v in dicc.items()) + " | "
+    return cabecera + "\\n".join(salida)
 
 def descomprimir_soxcima(texto_comprimido):
     partes = texto_comprimido.split(" | ", 1)
