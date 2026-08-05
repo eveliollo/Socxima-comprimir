@@ -12,7 +12,8 @@ export const Compressor: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
   const [result, setResult] = useState<CompressionResult | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
-  const [viewMode, setViewMode] = useState<'compressed' | 'dictionary' | 'diff'>('compressed');
+  const [viewMode, setViewMode] = useState<'compressed' | 'paso1' | 'dictionary'>('compressed');
+  const [useZstd, setUseZstd] = useState<boolean>(true);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -21,14 +22,14 @@ export const Compressor: React.FC = () => {
     if (!inputText) {
       const defaultText = SAMPLE_DATASETS[0].getText();
       setInputText(defaultText);
-      const res = comprimirSoxcima(defaultText);
+      const res = comprimirSoxcima(defaultText, useZstd);
       setResult(res);
     }
-  }, []);
+  }, [useZstd]);
 
-  const handleCompress = (textToCompress = inputText) => {
+  const handleCompress = (textToCompress = inputText, zstd = useZstd) => {
     if (!textToCompress) return;
-    const res = comprimirSoxcima(textToCompress);
+    const res = comprimirSoxcima(textToCompress, zstd);
     setResult(res);
   };
 
@@ -214,28 +215,54 @@ export const Compressor: React.FC = () => {
               <h2 className="text-sm font-bold text-slate-800">Resultado Comprimido SOXCIMA</h2>
             </div>
 
-            {/* View switcher */}
-            <div className="flex items-center gap-1 bg-slate-200/70 p-0.5 rounded-lg text-xs">
-              <button
-                id="view-compressed-raw"
-                onClick={() => setViewMode('compressed')}
-                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
-                  viewMode === 'compressed' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Eye className="w-3 h-3 inline mr-1" />
-                Texto Raw
-              </button>
-              <button
-                id="view-dictionary"
-                onClick={() => setViewMode('dictionary')}
-                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
-                  viewMode === 'dictionary' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Table className="w-3 h-3 inline mr-1" />
-                Diccionario ({result ? Object.keys(result.dictionary).length : 0})
-              </button>
+            {/* View switcher & mode toggle */}
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="flex items-center gap-1.5 text-xs text-slate-600 bg-slate-100 px-2 py-1 rounded-lg border border-slate-200 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={useZstd}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    setUseZstd(checked);
+                    handleCompress(inputText, checked);
+                  }}
+                  className="rounded text-emerald-600 focus:ring-emerald-500"
+                />
+                <span className="font-semibold text-emerald-700">+ ZSTD Level 9</span>
+              </label>
+
+              <div className="flex items-center gap-1 bg-slate-200/70 p-0.5 rounded-lg text-xs">
+                <button
+                  id="view-compressed-raw"
+                  onClick={() => setViewMode('compressed')}
+                  className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                    viewMode === 'compressed' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Eye className="w-3 h-3 inline mr-1" />
+                  Output (ZSTD)
+                </button>
+                <button
+                  id="view-paso1"
+                  onClick={() => setViewMode('paso1')}
+                  className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                    viewMode === 'paso1' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Layers className="w-3 h-3 inline mr-1" />
+                  Paso 1 (SOX)
+                </button>
+                <button
+                  id="view-dictionary"
+                  onClick={() => setViewMode('dictionary')}
+                  className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                    viewMode === 'dictionary' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Table className="w-3 h-3 inline mr-1" />
+                  Diccionario ({result ? Object.keys(result.dictionary).length : 0})
+                </button>
+              </div>
             </div>
           </div>
 
@@ -255,7 +282,7 @@ export const Compressor: React.FC = () => {
                     {/* Output action buttons */}
                     <div className="mt-3 flex items-center justify-between gap-2">
                       <span className="text-xs text-slate-500 font-mono">
-                        Header: {result.compressedText.split(' | ')[0]?.length || 0} bytes
+                        Modo: {result.mode === 'zstd' ? 'SOXCIMA + ZSTD v5.2' : 'SOXCIMA v5.2 Pure'}
                       </span>
 
                       <div className="flex items-center gap-2">
@@ -285,6 +312,18 @@ export const Compressor: React.FC = () => {
                           Descargar .soxcima
                         </button>
                       </div>
+                    </div>
+                  </div>
+                ) : viewMode === 'paso1' ? (
+                  <div className="flex-1 flex flex-col">
+                    <textarea
+                      id="compress-paso1-textarea"
+                      readOnly
+                      value={result.paso1Text || ''}
+                      className="w-full h-80 lg:h-[420px] p-3 text-xs sm:text-sm font-mono bg-slate-900 text-amber-300 border border-slate-800 rounded-lg focus:outline-none resize-none leading-relaxed"
+                    />
+                    <div className="mt-2 text-xs text-slate-500 font-mono">
+                      Paso 1: Cabecera tokenizada con delimitador <code className="text-amber-400">"||SOX||"</code> y líneas filtradas por frecuencia (&gt;1 repetición).
                     </div>
                   </div>
                 ) : (

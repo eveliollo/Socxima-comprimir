@@ -78,9 +78,9 @@ export const Decompressor: React.FC = () => {
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-emerald-400" />
           <div>
-            <h3 className="text-sm font-semibold text-white">Descompresor Universal Socxima-comprimir v5.1</h3>
+            <h3 className="text-sm font-semibold text-white">Descompresor Universal Socxima-comprimir v5.2 (SOXCIMA + ZSTD)</h3>
             <p className="text-xs text-slate-400">
-              Restaura archivos comprimidos con el delimitador <code className="text-emerald-300 font-mono">" | "</code> y tokens <code className="text-emerald-300 font-mono">@1, @2...</code>
+              Restaura archivos comprimidos en Base64 ZSTD o texto plano con delimitador <code className="text-emerald-300 font-mono">"||SOX||"</code> / <code className="text-emerald-300 font-mono">" | "</code>
             </p>
           </div>
         </div>

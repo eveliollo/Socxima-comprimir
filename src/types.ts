@@ -1,6 +1,8 @@
 export interface CompressionResult {
   originalText: string;
   compressedText: string;
+  paso1Text?: string;
+  mode?: 'zstd' | 'standard';
   originalSizeBytes: number;
   compressedSizeBytes: number;
   reductionPercentage: number;
